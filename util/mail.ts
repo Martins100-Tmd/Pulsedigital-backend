@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-console.log(process.env.SMTP_USER, process.env.SMTP_PASS);
 if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
   throw new Error("Missing email credentials in environment variables");
 }
