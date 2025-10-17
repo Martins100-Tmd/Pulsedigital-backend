@@ -10,7 +10,6 @@ if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
 export const sendMail = async (token: string, email: string) => {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
     secure: true,
     auth: {
       user: process.env.SMTP_USER,
