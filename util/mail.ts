@@ -63,6 +63,7 @@ The Opportunity Pulse Team
       </div>`,
     });
   } catch (err) {
+    console.log(err);
     throw new Error("Error sending mail to user");
   }
 };
