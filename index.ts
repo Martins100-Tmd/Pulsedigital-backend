@@ -3,14 +3,14 @@ import express from "express";
 import cors, { type CorsOptions } from "cors";
 import { createServer } from "http";
 import { authRouter } from "./router/authRouter";
-import { initializeDatabase, User } from "./DB";
+import { initializeDatabase, } from "./DB";
 
 const app = express();
 const httpServer = createServer(app);
 app.use(express.json({ limit: "500mb" }));
 app.set("port", 3000);
 
-const whiteList = ["opportunitypulsedigital.netlify.app", "http:localhost:5173", "http://localhost:3000"]
+const whiteList = ["opportunitypulsedigital.netlify.app", "http://localhost:5173", "http://localhost:3000"]
 const corsOption: CorsOptions = {
     origin: function (origin, callback) {
         if (!origin || whiteList.indexOf(origin) != -1) {
@@ -39,7 +39,7 @@ app.use("/auth", authRouter);
 
 
 await initializeDatabase().then(() => {
-    httpServer.listen(3000, () => {
+    httpServer.listen(3000, "0.0.0.0", () => {
         console.log("Server is running on port ", app.get("port"));
     })
 })

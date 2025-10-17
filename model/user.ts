@@ -22,10 +22,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
 
     @Attribute(DataTypes.STRING)
     @NotNull
-    declare firstName: string;
-
-    @Attribute(DataTypes.STRING)
-    declare lastName: string | null;
+    declare name: string;
 
     @Attribute(DataTypes.STRING)
     @NotNull
