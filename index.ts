@@ -10,7 +10,7 @@ const httpServer = createServer(app);
 app.use(express.json({ limit: "500mb" }));
 app.set("port", 3000);
 
-const whiteList = ["opportunitypulsedigital.netlify.app", "http://localhost:5173", "http://localhost:3000"]
+const whiteList = ["https://opportunitypulsedigital.netlify.app", "http://localhost:5173", "http://localhost:3000"]
 const corsOption: CorsOptions = {
     origin: function (origin, callback) {
         if (!origin || whiteList.indexOf(origin) != -1) {
