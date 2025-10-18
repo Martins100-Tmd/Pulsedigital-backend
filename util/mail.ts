@@ -20,7 +20,7 @@ export const sendMail = async (token: string, email: string) => {
   const verifyUrl = `${process.env.FRONTEND_URL}/verify/${token}`;
 
   try {
-    await transporter.sendMail({
+    const send = await transporter.sendMail({
       from: `"Opportunity Pulse Digital" <${process.env.SMTP_USER}>`,
       to: email,
       subject: "Welcome!",
@@ -60,6 +60,7 @@ The Opportunity Pulse Team
         </p>
       </div>`,
     });
+    console.log(send);
   } catch (err) {
     console.log(err);
     throw new Error("Error sending mail to user");
