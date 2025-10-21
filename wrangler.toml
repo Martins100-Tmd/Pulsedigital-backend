@@ -10,12 +10,6 @@ bucket = "./public" # optional, for static assets
 
 [vars]
 NODE_ENV = "production"
-JWT_SECRET=ABCXX00
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=465
-SMTP_USER=martinssc30@gmail.com
-SMTP_PASS=bieg jggk izdb lzgt
-FRONTEND_URL=https://opportunitypulsedigital.netlify.app
 
 [observability]
 enabled = true
