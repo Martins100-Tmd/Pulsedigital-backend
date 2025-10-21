@@ -1,4 +1,5 @@
-name = "my-express-app"
+n# ./wrangler.toml
+name = 'pulsedigital'
 main = "dist/index.js" # or build output file
 compatibility_date = "2025-10-21"
 
