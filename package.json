@@ -4,10 +4,13 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --watch run index.ts"
+    "dev": "bun --watch run dev",
+    "build": "bun build ./src/index.ts --outdir=dist --target=browser --minify",
+    "deploy": "wrangler deploy"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "wrangler": "^4.44.0"
   },
   "peerDependencies": {
     "typescript": "^5"
@@ -26,6 +29,7 @@
     "ioredis": "^5.8.1",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^7.0.9",
+    "resend": "^6.2.0",
     "ts-node": "^10.9.2"
   }
 }
