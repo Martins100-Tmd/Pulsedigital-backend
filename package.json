@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --watch run dev",
+    "dev": "wrangler dev",
     "build": "bun build index.ts --outdir=dist --target=browser --minify",
     "deploy": "wrangler deploy"
   },
