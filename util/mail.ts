@@ -1,30 +1,25 @@
-import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import sgMail from "@sendgrid/mail";
 
 dotenv.config();
 
-if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-  throw new Error("Missing email credentials in environment variables");
+if (!process.env.SENDGRID_API_KEY || !process.env.SENDGRID_FROM) {
+  throw new Error("Missing SendGrid credentials in environment variables");
 }
 
-export const sendMail = async (token: string, email: string) => {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    secure: true,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  });
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+export const sendMail = async (token: string, email: string) => {
   const verifyUrl = `${process.env.FRONTEND_URL}/verify/${token}`;
 
-  try {
-    const send = await transporter.sendMail({
-      from: `"Opportunity Pulse Digital" <${process.env.SMTP_USER}>`,
-      to: email,
-      subject: "Welcome!",
-      text: `
+  const msg = {
+    to: email,
+    from: {
+      email: process.env.SENDGRID_FROM!, // must be verified in SendGrid
+      name: "Opportunity Pulse Digital",
+    },
+    subject: "Welcome!",
+    text: `
 Welcome to Opportunity Pulse Digital!
 
 Please verify your email address to activate your account.
@@ -37,11 +32,9 @@ If you didn’t create an account, please ignore this email.
 
 Thanks,
 The Opportunity Pulse Team
-            `,
-
-      html: `
-        
-        <div style="font-family: Arial, sans-serif; color: #333;">
+    `,
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #333;">
         <h2>Welcome to Opportunity Pulse Digital 🎉</h2>
         <p>Hi there,</p>
         <p>Thank you for signing up! Please verify your email address to activate your account.</p>
@@ -58,11 +51,15 @@ The Opportunity Pulse Team
         <p style="font-size: 12px; color: #777;">
           If you didn’t create an account, you can safely ignore this email.
         </p>
-      </div>`,
-    });
-    console.log(send);
-  } catch (err) {
-    console.log(err);
+      </div>
+    `,
+  };
+
+  try {
+    const response = await sgMail.send(msg);
+    console.log("✅ Email sent:", response[0].statusCode);
+  } catch (err: any) {
+    console.error("❌ SendGrid error:", err.response?.body || err.message);
     throw new Error("Error sending mail to user");
   }
 };
