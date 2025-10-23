@@ -4,6 +4,8 @@ import cors, { type CorsOptions } from "cors";
 import { createServer } from "http";
 import { authRouter } from "./router/authRouter";
 import { initializeDatabase, } from "./DB";
+import { askGemini } from "./util/gemini";
+
 
 const app = express();
 const httpServer = createServer(app);
@@ -31,9 +33,18 @@ app.get("/", async (req: Request, res: Response) => {
 })
 
 app.use("/auth", authRouter);
-// app.use("/auth", coRouter);
-// app.use("/auth", authRouter);
-// app.use("/auth", authRouter);
+app.post("/ask", async (req, res) => {
+    try {
+        const { question } = req.body;
+        if (!question) return res.status(400).json({ error: "Missing question" });
+
+        const answer = await askGemini(question);
+        res.json({ answer });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "AI request failed" });
+    }
+});
 
 
 
